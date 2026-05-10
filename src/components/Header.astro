@@ -1,0 +1,93 @@
+---
+import { categories } from "../config/categories";
+import type { Language } from "../config/i18n";
+import { ui } from "../data/ui";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+interface Props {
+  lang: Language;
+  languageLinks: Partial<Record<Language, string>>;
+}
+
+const { lang, languageLinks } = Astro.props;
+const labels = ui[lang];
+---
+
+<header class="site-header">
+  <a href={`/${lang}/`} class="brand-link" aria-label="STR4T0TT0 home">
+    <img
+      src="/brand/logo-str4t0tt0-on-dark.svg"
+      alt="STR4T0TT0"
+      class="brand-logo"
+    />
+  </a>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href={`/${lang}/`}>{labels.nav.home}</a>
+    <a href={`/${lang}/${categories.ai.slug}/`}>{labels.nav.ai}</a>
+    <a href={`/${lang}/${categories.cybersecurity.slug}/`}>
+      {labels.nav.cybersecurity}
+    </a>
+    <a href={`/${lang}/${categories.crypto.slug}/`}>{labels.nav.crypto}</a>
+    <a href={`/${lang}/about/`}>{labels.nav.about}</a>
+  </nav>
+
+  <LanguageSwitcher currentLang={lang} links={languageLinks} />
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0 4rem;
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .brand-logo {
+    height: 42px;
+    width: auto;
+  }
+
+  .main-nav {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .main-nav a {
+    transition: color 160ms ease;
+  }
+
+  .main-nav a:hover {
+    color: var(--color-text);
+  }
+
+  @media (min-width: 860px) {
+    .main-nav {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .site-header {
+      align-items: flex-start;
+      flex-direction: column;
+      padding-bottom: 3rem;
+    }
+
+    .brand-logo {
+      height: 34px;
+    }
+  }
+</style>

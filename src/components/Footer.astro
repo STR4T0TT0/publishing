@@ -1,0 +1,39 @@
+---
+import type { Language } from "../config/i18n";
+import { ui } from "../data/ui";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+---
+
+<footer class="site-footer">
+  <span>STR4T0TT0</span>
+  <span>{labels.footer.staging}</span>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .site-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

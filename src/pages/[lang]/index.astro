@@ -1,0 +1,177 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { categories } from "../../config/categories";
+import { isLanguage, type Language } from "../../config/i18n";
+import { ui } from "../../data/ui";
+import { site } from "../../config/site";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];
+}
+
+const langParam = Astro.params.lang;
+
+if (!isLanguage(langParam)) {
+  return Astro.redirect("/en/");
+}
+
+const lang: Language = langParam;
+const labels = ui[lang];
+
+const languageLinks = {
+  en: "/en/",
+  fr: "/fr/",
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={site.title}
+  description={site.description}
+  languageLinks={languageLinks}
+>
+  <section class="hero">
+    <p class="eyebrow mono-label">{labels.home.eyebrow}</p>
+
+    <h1>{labels.home.title}</h1>
+
+    <p class="lead">{labels.home.lead}</p>
+
+    <div class="status-card">
+      <span class="status-label mono-label">{labels.home.statusLabel}</span>
+      <strong>{labels.home.statusTitle}</strong>
+      <p>{labels.home.statusText}</p>
+    </div>
+  </section>
+
+  <section class="domain-section" aria-labelledby="domains-title">
+    <div class="section-header">
+      <p class="mono-label">{labels.home.domainsTitle}</p>
+    </div>
+
+    <div class="domain-grid">
+      {
+        Object.values(categories).map((category, index) => (
+          <a href={`/${lang}/${category.slug}/`} class="domain-card">
+            <span class="mono-label">{String(index + 1).padStart(2, "0")}</span>
+            <h2>{category.labels[lang]}</h2>
+            <p>{category.descriptions[lang]}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    max-width: 880px;
+    padding: 2rem 0 4rem;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+    margin: 0 0 1rem;
+  }
+
+  h1 {
+    max-width: 900px;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2.7rem, 8vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+  }
+
+  .lead {
+    max-width: 720px;
+    margin: 2rem 0 0;
+    color: var(--color-muted);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    line-height: 1.45;
+  }
+
+  .status-card {
+    max-width: 760px;
+    margin-top: 3rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-surface);
+  }
+
+  .status-card strong {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 1.2rem;
+  }
+
+  .status-card p {
+    margin: 0.8rem 0 0;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  .status-label {
+    color: var(--color-muted);
+    font-size: 0.72rem;
+  }
+
+  .domain-section {
+    margin-top: auto;
+  }
+
+  .section-header {
+    margin-bottom: 1rem;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+
+  .domain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .domain-card {
+    display: block;
+    padding: 1.25rem;
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.025);
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      transform 160ms ease;
+  }
+
+  .domain-card:hover {
+    border-color: rgba(163, 39, 20, 0.7);
+    background: var(--color-surface);
+    transform: translateY(-2px);
+  }
+
+  .domain-card span {
+    color: var(--color-accent);
+    font-size: 0.75rem;
+  }
+
+  .domain-card h2 {
+    margin: 1rem 0 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .domain-card p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 820px) {
+    .domain-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
