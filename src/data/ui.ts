@@ -27,6 +27,9 @@ export const ui: Record<
     footer: {
       staging: string;
     };
+    meta: {
+  readingTime: string;
+}
   }
 > = {
   en: {
@@ -55,6 +58,9 @@ export const ui: Record<
     footer: {
       staging: "Staging environment. Authorized access only.",
     },
+    meta: {
+  readingTime: "min read",
+},
   },
   fr: {
     nav: {
@@ -82,5 +88,8 @@ export const ui: Record<
     footer: {
       staging: "Environnement de staging. Accès autorisé uniquement.",
     },
+    meta: {
+  readingTime: "min read",
+},
   },
 };

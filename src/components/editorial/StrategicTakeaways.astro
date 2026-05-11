@@ -1,0 +1,48 @@
+---
+interface Props {
+  title?: string;
+  items: string[];
+}
+
+const { title = "Strategic takeaways", items } = Astro.props;
+---
+
+<aside class="takeaways">
+  <p class="takeaways-label mono-label">{title}</p>
+
+  <ul>
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+</aside>
+
+<style>
+  .takeaways {
+    margin: 3rem 0;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-surface);
+  }
+
+  .takeaways-label {
+    margin: 0 0 1rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding-left: 1.15rem;
+  }
+
+  li {
+    color: var(--color-text);
+    line-height: 1.55;
+  }
+
+  li::marker {
+    color: var(--color-accent);
+  }
+</style>

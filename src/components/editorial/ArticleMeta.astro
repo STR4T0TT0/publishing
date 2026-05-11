@@ -1,0 +1,74 @@
+---
+import { categories, type CategorySlug } from "../../config/categories";
+import type { Language } from "../../config/i18n";
+import { ui } from "../../data/ui";
+
+interface Props {
+  lang: Language;
+  category: CategorySlug;
+  date: string;
+  readingTime: number;
+}
+
+const { lang, category, date, readingTime } = Astro.props;
+const labels = ui[lang];
+
+const formattedDate = new Intl.DateTimeFormat(
+  lang === "fr" ? "fr-FR" : "en-US",
+  {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  },
+).format(new Date(date));
+---
+
+<div class="article-meta mono-label">
+  <a href={`/${lang}/${category}/`} class="category-link">
+    {categories[category].labels[lang]}
+  </a>
+
+  <span>{formattedDate}</span>
+
+  <span>
+    {readingTime}
+    {labels.meta.readingTime}
+  </span>
+</div>
+
+<style>
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+  }
+
+  .article-meta span,
+  .category-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .category-link {
+    color: var(--color-accent);
+  }
+
+  .article-meta span::before {
+    content: "/";
+    margin-right: 1rem;
+    color: var(--color-border);
+  }
+
+  @media (max-width: 560px) {
+    .article-meta {
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .article-meta span::before {
+      content: none;
+    }
+  }
+</style>
