@@ -82,3 +82,20 @@ export function getArticleTranslations(
     {},
   );
 }
+
+export function getArticlesByCategory(
+  language: Language,
+  category: CategorySlug,
+): Article[] {
+  return articles
+    .filter(
+      (article) =>
+        article.language === language &&
+        article.category === category &&
+        article.published,
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
+}

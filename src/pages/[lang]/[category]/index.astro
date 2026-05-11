@@ -1,0 +1,149 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ArticleCard from "../../../components/editorial/ArticleCard.astro";
+import { isLanguage, type Language } from "../../../config/i18n";
+import {
+  categories,
+  categorySlugs,
+  isCategory,
+  type CategorySlug,
+} from "../../../config/categories";
+import { getArticlesByCategory } from "../../../data/articles";
+import { ui } from "../../../data/ui";
+import { site } from "../../../config/site";
+
+export function getStaticPaths() {
+  return ["en", "fr"].flatMap((lang) =>
+    categorySlugs.map((category) => ({
+      params: {
+        lang,
+        category,
+      },
+    })),
+  );
+}
+
+const langParam = Astro.params.lang;
+const categoryParam = Astro.params.category;
+
+if (!isLanguage(langParam) || !isCategory(categoryParam)) {
+  return Astro.redirect("/en/");
+}
+
+const lang: Language = langParam;
+const category: CategorySlug = categoryParam;
+const categoryData = categories[category];
+const labels = ui[lang];
+
+const categoryArticles = getArticlesByCategory(lang, category);
+
+const languageLinks = {
+  en: `/en/${category}/`,
+  fr: `/fr/${category}/`,
+};
+
+const pageTitle = categoryData.labels[lang];
+const pageDescription = categoryData.descriptions[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={pageTitle}
+  description={pageDescription}
+  languageLinks={languageLinks}
+>
+  <section class="category-header">
+    <p class="eyebrow mono-label">STR4T0TT0 / {categoryData.labels[lang]}</p>
+
+    <h1>{categoryData.labels[lang]}</h1>
+
+    <p class="lead">{categoryData.descriptions[lang]}</p>
+  </section>
+
+  <section class="article-list" aria-label={pageTitle}>
+    {
+      categoryArticles.length > 0 ? (
+        <div class="article-grid">
+          {categoryArticles.map((article) => (
+            <ArticleCard article={article} lang={lang} />
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <p class="mono-label">
+            {lang === "fr"
+              ? "Aucun article publié pour l’instant."
+              : "No articles published yet."}
+          </p>
+          <a href={`/${lang}/`} class="back-link mono-label">
+            {lang === "fr" ? "Retour à l’accueil" : "Back to home"}
+          </a>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .category-header {
+    max-width: 860px;
+    padding: 2rem 0 4rem;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 0.8rem;
+    margin: 0 0 1rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2.7rem, 8vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+  }
+
+  .lead {
+    max-width: 720px;
+    margin: 2rem 0 0;
+    color: var(--color-muted);
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    line-height: 1.45;
+  }
+
+  .article-list {
+    padding-bottom: 4rem;
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .empty-state {
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .empty-state p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    margin-top: 1.25rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  @media (min-width: 900px) {
+    .article-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

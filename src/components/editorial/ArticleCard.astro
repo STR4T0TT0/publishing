@@ -1,0 +1,104 @@
+---
+import type { Article } from "../../data/articles";
+import { categories } from "../../config/categories";
+import type { Language } from "../../config/i18n";
+import { ui } from "../../data/ui";
+
+interface Props {
+  article: Article;
+  lang: Language;
+}
+
+const { article, lang } = Astro.props;
+const labels = ui[lang];
+
+const articleUrl = `/${article.language}/${article.category}/${article.slug}/`;
+
+const formattedDate = new Intl.DateTimeFormat(
+  lang === "fr" ? "fr-FR" : "en-US",
+  {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  },
+).format(new Date(article.date));
+---
+
+<a href={articleUrl} class="article-card">
+  <div class="article-card-meta mono-label">
+    <span>{categories[article.category].labels[lang]}</span>
+    <span>{formattedDate}</span>
+    <span>{article.readingTime} {labels.meta.readingTime}</span>
+  </div>
+
+  <h2>{article.title}</h2>
+
+  <p>{article.description}</p>
+
+  <span class="article-card-link mono-label">{labels.cta.readMore}</span>
+</a>
+
+<style>
+  .article-card {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.025);
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      transform 160ms ease;
+  }
+
+  .article-card:hover {
+    border-color: rgba(163, 39, 20, 0.7);
+    background: var(--color-surface);
+    transform: translateY(-2px);
+  }
+
+  .article-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.85rem;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+  }
+
+  .article-card-meta span + span::before {
+    content: "/";
+    margin-right: 0.85rem;
+    color: var(--color-border);
+  }
+
+  h2 {
+    margin: 1.1rem 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 3vw, 1.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  .article-card-link {
+    display: inline-flex;
+    margin-top: 1.25rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  @media (max-width: 560px) {
+    .article-card-meta {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .article-card-meta span + span::before {
+      content: none;
+    }
+  }
+</style>
