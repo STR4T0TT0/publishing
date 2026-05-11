@@ -18,6 +18,7 @@ export interface Article {
   readingTime: number;
 
   tags: string[];
+  contentPath: string;
 }
 
 export const articles: Article[] = [
@@ -46,6 +47,8 @@ export const articles: Article[] = [
       "Strategy",
       "Risk Management",
     ],
+    contentPath: 
+      "what-the-chinese-ai-market-reveals.en.mdx",
   },
 ];
 

@@ -1,7 +1,6 @@
 ---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import ArticleLayout from "../../../layouts/ArticleLayout.astro";
-import PullQuote from "../../../components/editorial/PullQuote.astro";
-import StrategicTakeaways from "../../../components/editorial/StrategicTakeaways.astro";
 import { isLanguage, type Language } from "../../../config/i18n";
 import { isCategory, type CategorySlug } from "../../../config/categories";
 import {
@@ -9,6 +8,14 @@ import {
   getArticleByRoute,
   getArticleTranslations,
 } from "../../../data/articles";
+
+type MdxModule = {
+  default: AstroComponentFactory;
+};
+
+const mdxModules = import.meta.glob<MdxModule>(
+  "../../../content/articles/*.mdx",
+);
 
 export function getStaticPaths() {
   return articles
@@ -39,6 +46,16 @@ if (!article) {
   return Astro.redirect("/404");
 }
 
+const mdxPath = `../../../content/articles/${article.contentPath}`;
+const mdxLoader = mdxModules[mdxPath];
+
+if (!mdxLoader) {
+  throw new Error(`Missing MDX content file: ${article.contentPath}`);
+}
+
+const mdxModule = await mdxLoader();
+const Content = mdxModule.default;
+
 const languageLinks = getArticleTranslations(article);
 ---
 
@@ -52,61 +69,5 @@ const languageLinks = getArticleTranslations(article);
   readingTime={article.readingTime}
   languageLinks={languageLinks}
 >
-  <p>
-    The Chinese AI market is not only a technology story. It is a capital market
-    signal. It shows how investors, regulators, and industrial actors begin to
-    price the strategic value of artificial intelligence before the crisis
-    becomes visible.
-  </p>
-
-  <p>
-    In this environment, AI is not treated merely as a software category. It is
-    treated as infrastructure: capital-intensive, politically sensitive, and
-    increasingly tied to national competitiveness, market structure, and
-    governance pressure.
-  </p>
-
-  <PullQuote
-    quote="AI markets do not only price growth. They price control, dependency, and strategic optionality."
-  />
-
-  <h2>Capital is reading AI before the crisis</h2>
-
-  <p>
-    The most important signal is not hype. It is the willingness of capital to
-    fund AI companies before their business models are fully stabilized. That
-    willingness reveals how markets value optionality under uncertainty.
-  </p>
-
-  <p>
-    Chinese AI companies expose this dynamic with particular clarity. Their
-    trajectory shows that the market is not only asking whether AI will generate
-    revenue. It is asking who will control the infrastructure, who will absorb
-    the cost, and who will retain strategic flexibility once the market
-    consolidates.
-  </p>
-
-  <StrategicTakeaways
-    items={[
-      "AI should be analyzed as infrastructure, not only as software.",
-      "Capital intensity is becoming a strategic filter for AI winners.",
-      "Governance pressure will increasingly shape AI market structure.",
-      "The market is already repricing AI assumptions before a visible crisis.",
-    ]}
-  />
-
-  <h2>What this reveals</h2>
-
-  <p>
-    The Chinese AI market reveals a broader strategic pattern: when a technology
-    becomes systemic, valuation starts to include more than growth. It includes
-    resilience, dependency, control, and the cost of maintaining optionality.
-  </p>
-
-  <p>
-    This is why AI cannot be understood only through product demos, benchmark
-    races, or short-term revenue expectations. The deeper question is whether
-    firms, investors, and states can govern the infrastructure they are rushing
-    to build.
-  </p>
+  <Content />
 </ArticleLayout>
