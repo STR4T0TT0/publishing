@@ -1,0 +1,159 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ArticleMeta from "../components/editorial/ArticleMeta.astro";
+import type { Language } from "../config/i18n";
+import type { CategorySlug } from "../config/categories";
+
+interface Props {
+  lang: Language;
+  title: string;
+  subtitle: string;
+  description: string;
+  category: CategorySlug;
+  date: string;
+  readingTime: number;
+  languageLinks: Partial<Record<Language, string>>;
+  heroImage?: string;
+  heroAlt?: string;
+}
+
+const {
+  lang,
+  title,
+  subtitle,
+  description,
+  category,
+  date,
+  readingTime,
+  languageLinks,
+  heroImage,
+  heroAlt,
+} = Astro.props;
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={description}
+  languageLinks={languageLinks}
+>
+  <article class="article-shell">
+    <header class="article-header">
+      <ArticleMeta
+        lang={lang}
+        category={category}
+        date={date}
+        readingTime={readingTime}
+      />
+
+      <h1>{title}</h1>
+
+      <p class="article-subtitle">{subtitle}</p>
+    </header>
+
+    {
+      heroImage && (
+        <figure class="article-hero">
+          <img src={heroImage} alt={heroAlt ?? ""} />
+        </figure>
+      )
+    }
+
+    <div class="article-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-shell {
+    width: min(100%, var(--reading-width));
+    margin: 0 auto;
+    padding: 1rem 0 4rem;
+  }
+
+  .article-header {
+    padding: 2rem 0 3rem;
+  }
+
+  h1 {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2.35rem, 7vw, 5.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
+  }
+
+  .article-subtitle {
+    margin: 1.5rem 0 0;
+    color: var(--color-muted);
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.45;
+  }
+
+  .article-hero {
+    margin: 0 0 3rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .article-hero img {
+    display: block;
+    width: 100%;
+  }
+
+  .article-content {
+    color: var(--color-text);
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .article-content :global(p) {
+    margin: 0 0 1.35rem;
+  }
+
+  .article-content :global(h2) {
+    margin: 3rem 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .article-content :global(h3) {
+    margin: 2.25rem 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    line-height: 1.25;
+  }
+
+  .article-content :global(a) {
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-accent);
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    margin: 0 0 1.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .article-content :global(li) {
+    margin-bottom: 0.65rem;
+  }
+
+  .article-content :global(li::marker) {
+    color: var(--color-accent);
+  }
+
+  .article-content :global(strong) {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  @media (min-width: 1080px) {
+    .article-shell {
+      padding-top: 2rem;
+    }
+  }
+</style>

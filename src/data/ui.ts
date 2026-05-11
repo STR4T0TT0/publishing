@@ -28,7 +28,7 @@ export const ui: Record<
       staging: string;
     };
     meta: {
-  readingTime: string;
+      readingTime: string;
 }
   }
 > = {
@@ -59,7 +59,7 @@ export const ui: Record<
       staging: "Staging environment. Authorized access only.",
     },
     meta: {
-  readingTime: "min read",
+      readingTime: "min read",
 },
   },
   fr: {
@@ -89,7 +89,7 @@ export const ui: Record<
       staging: "Environnement de staging. Accès autorisé uniquement.",
     },
     meta: {
-  readingTime: "min read",
+      readingTime: "min read",
 },
   },
 };
