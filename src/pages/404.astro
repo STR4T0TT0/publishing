@@ -1,0 +1,144 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Signal not found — STR4T0TT0</title>
+    <meta
+      name="description"
+      content="The requested STR4T0TT0 page does not exist or has moved."
+    />
+  </head>
+
+  <body>
+    <main class="not-found-shell">
+      <header class="not-found-header">
+        <a href="/en/" aria-label="STR4T0TT0 home">
+          <img
+            src="/brand/logo-str4t0tt0-on-dark.svg"
+            alt="STR4T0TT0"
+            class="brand-logo"
+          />
+        </a>
+      </header>
+
+      <section class="not-found-content" data-lang="en">
+        <p class="eyebrow mono-label">404 / Signal lost</p>
+        <h1>Signal not found.</h1>
+        <p class="lead">
+          The page you are looking for does not exist, has moved, or is not yet
+          available in this environment.
+        </p>
+        <a class="return-link mono-label" href="/en/">Return to home</a>
+      </section>
+
+      <section class="not-found-content" data-lang="fr" hidden>
+        <p class="eyebrow mono-label">404 / Signal perdu</p>
+        <h1>Signal introuvable.</h1>
+        <p class="lead">
+          La page recherchée n’existe pas, a été déplacée, ou n’est pas encore
+          disponible dans cet environnement.
+        </p>
+        <a class="return-link mono-label" href="/fr/">Retour à l’accueil</a>
+      </section>
+    </main>
+
+    <script>
+      const path = window.location.pathname;
+      const isFrench = path.startsWith("/fr/") || path === "/fr";
+
+      const html = document.documentElement;
+      html.lang = isFrench ? "fr" : "en";
+
+      const enBlock = document.querySelector('[data-lang="en"]');
+      const frBlock = document.querySelector('[data-lang="fr"]');
+
+      if (enBlock && frBlock && isFrench) {
+        enBlock.setAttribute("hidden", "");
+        frBlock.removeAttribute("hidden");
+        document.title = "Signal introuvable — STR4T0TT0";
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .not-found-shell {
+    width: min(100% - 2rem, var(--max-width));
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .not-found-header {
+    padding: 1rem 0 5rem;
+  }
+
+  .brand-logo {
+    height: 42px;
+    width: auto;
+  }
+
+  .not-found-content {
+    max-width: 780px;
+    margin: auto 0;
+    padding-bottom: 6rem;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+    margin: 0 0 1rem;
+  }
+
+  h1 {
+    max-width: 820px;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2.7rem, 8vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+  }
+
+  .lead {
+    max-width: 640px;
+    margin: 2rem 0 0;
+    color: var(--color-muted);
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    line-height: 1.45;
+  }
+
+  .return-link {
+    display: inline-flex;
+    margin-top: 2.5rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: 0.75rem;
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      transform 160ms ease;
+  }
+
+  .return-link:hover {
+    border-color: rgba(163, 39, 20, 0.7);
+    background: var(--color-surface);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 760px) {
+    .brand-logo {
+      height: 34px;
+    }
+
+    .not-found-header {
+      padding-bottom: 3rem;
+    }
+  }
+</style>
