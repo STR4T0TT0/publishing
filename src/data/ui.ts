@@ -41,10 +41,10 @@ export const ui: Record<
       about: "About",
     },
     home: {
-      eyebrow: "Editorial publishing platform",
-      title: "Strategic intelligence for digital systems.",
-      lead: "STR4T0TT0 analyzes AI, cybersecurity, and crypto as infrastructures of power, risk, capital allocation, and decision-making.",
-      statusLabel: "Migration status",
+      eyebrow: "Strategic intelligence briefing",
+      title: "When digital systems become strategic risk",
+      lead:
+        "STR4T0TT0 tracks how AI, cybersecurity, and crypto reshape power, risk, capital allocation, and strategic optionality.",      statusLabel: "Migration status",
       statusTitle: "Astro + Cloudflare Pages are operational.",
       statusText:
         "This staging environment is protected by Cloudflare Access and will be used to validate the new design, bilingual routing, content model, and AI-assisted publishing workflow.",
@@ -71,10 +71,10 @@ export const ui: Record<
       about: "À propos",
     },
     home: {
-      eyebrow: "Plateforme éditoriale",
-      title: "Intelligence stratégique pour systèmes numériques.",
-      lead: "STR4T0TT0 analyse l’IA, la cybersécurité et les crypto-actifs comme des infrastructures de pouvoir, de risque, d’allocation du capital et de décision.",
-      statusLabel: "Statut de migration",
+      eyebrow: "Note d’intelligence stratégique",
+      title: "Quand nos systèmes numériques deviennent un risque stratégique",
+      lead:
+        "STR4T0TT0 analyse comment l’IA, la cybersécurité et la crypto redessinent le pouvoir, le risque, l’allocation du capital et l’optionalité stratégique.",      statusLabel: "Statut de migration",
       statusTitle: "Astro + Cloudflare Pages sont opérationnels.",
       statusText:
         "Cet environnement de staging est protégé par Cloudflare Access et servira à valider le design, le routage bilingue, le modèle de contenu et le futur workflow éditorial assisté par IA.",

@@ -277,3 +277,15 @@ export function getFeaturedArticlesByLanguage(language: Language): Article[] {
         new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
 }
+
+export function getPublishedArticleCountByCategory(
+  language: Language,
+  category: CategorySlug,
+): number {
+  return articles.filter(
+    (article) =>
+      article.language === language &&
+      article.category === category &&
+      article.published,
+  ).length;
+}

@@ -55,9 +55,6 @@ const formattedDate = new Intl.DateTimeFormat(
       <h2>{article.title}</h2>
 
       <p class="description">{article.description}</p>
-
-      {article.strategicAngle && <p class="angle">{article.strategicAngle}</p>}
-
       <span class="read-link mono-label">{labels.cta.readMore}</span>
     </div>
   </a>
@@ -140,15 +137,6 @@ const formattedDate = new Intl.DateTimeFormat(
     margin: 0;
     color: var(--color-muted);
     font-size: 1.05rem;
-    line-height: 1.55;
-  }
-
-  .angle {
-    max-width: 680px;
-    margin: 1.25rem 0 0;
-    padding-left: 1rem;
-    border-left: 2px solid var(--color-accent);
-    color: var(--color-text);
     line-height: 1.55;
   }
 
