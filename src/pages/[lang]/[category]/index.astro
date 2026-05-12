@@ -13,6 +13,7 @@ import { ui } from "../../../data/ui";
 import { site } from "../../../config/site";
 import CategoryHeader from "../../../components/category/CategoryHeader.astro";
 import FeaturedArticle from "../../../components/category/FeaturedArticle.astro";
+import CategoryEmptyState from "../../../components/category/CategoryEmptyState.astro";
 
 export function getStaticPaths() {
   return ["en", "fr"].flatMap((lang) =>
@@ -77,16 +78,7 @@ const pageDescription = categoryData.descriptions[lang];
           )}
         </>
       ) : (
-        <div class="empty-state">
-          <p class="mono-label">
-            {lang === "fr"
-              ? "Aucune analyse publiée dans cette catégorie pour l’instant."
-              : "No published analysis in this category yet."}
-          </p>
-          <a href={`/${lang}/`} class="back-link mono-label">
-            {lang === "fr" ? "Retour à l’accueil" : "Back to home"}
-          </a>
-        </div>
+        <CategoryEmptyState lang={lang} category={category} />
       )
     }
   </section>
@@ -101,25 +93,6 @@ const pageDescription = categoryData.descriptions[lang];
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-  }
-
-  .empty-state {
-    padding: 1.5rem;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-  }
-
-  .empty-state p {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: 0.75rem;
-  }
-
-  .back-link {
-    display: inline-flex;
-    margin-top: 1.25rem;
-    color: var(--color-accent);
-    font-size: 0.72rem;
   }
 
   @media (min-width: 900px) {

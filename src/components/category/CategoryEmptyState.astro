@@ -1,0 +1,94 @@
+---
+import type { Language } from "../../config/i18n";
+import type { CategorySlug } from "../../config/categories";
+import { categories } from "../../config/categories";
+
+interface Props {
+  lang: Language;
+  category: CategorySlug;
+}
+
+const { lang, category } = Astro.props;
+const categoryLabel = categories[category].labels[lang];
+
+const copy = {
+  en: {
+    eyebrow: "No signal published yet",
+    title: `${categoryLabel} analysis is being prepared.`,
+    text: "This intelligence stream is part of the STR4T0TT0 publishing roadmap. New analysis will appear here once validated.",
+    back: "Back to home",
+  },
+  fr: {
+    eyebrow: "Aucun signal publié pour l’instant",
+    title: `Le flux ${categoryLabel} est en préparation.`,
+    text: "Ce flux d’analyse fait partie de la feuille de route éditoriale STR4T0TT0. Les prochaines analyses apparaîtront ici après validation.",
+    back: "Retour à l’accueil",
+  },
+};
+---
+
+<div class="empty-state">
+  <p class="empty-eyebrow mono-label">{copy[lang].eyebrow}</p>
+
+  <h2>{copy[lang].title}</h2>
+
+  <p class="empty-text">{copy[lang].text}</p>
+
+  <a href={`/${lang}/`} class="back-link mono-label">
+    {copy[lang].back}
+  </a>
+</div>
+
+<style>
+  .empty-state {
+    position: relative;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    background:
+      linear-gradient(135deg, rgba(163, 39, 20, 0.1), transparent 38%),
+      var(--color-surface);
+  }
+
+  .empty-state::before {
+    content: "";
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    width: 3px;
+    height: 2rem;
+    background: var(--color-accent);
+  }
+
+  .empty-eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  h2 {
+    max-width: 680px;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  .empty-text {
+    max-width: 640px;
+    margin: 1rem 0 0;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  .back-link {
+    display: inline-flex;
+    margin-top: 1.5rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  .back-link:hover {
+    color: var(--color-text);
+  }
+</style>
