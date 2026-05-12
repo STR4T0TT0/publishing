@@ -170,6 +170,47 @@ export const articles: Article[] = [
 },
 
   },
+
+ {
+  translationGroupId: "rethinking-europes-ai-future",
+  language: "en",
+  category: "ai",
+  slug: "rethinking-europes-ai-future",
+  canonical: true,
+  published: true,
+  featured: false,
+
+  title: "Rethinking Europe’s AI Future",
+  subtitle:
+    "Lessons from China’s strategic approach to AI infrastructure, procurement, and software dependency.",
+  description:
+    "A strategic analysis of why chip production is an inadequate metric for Europe’s AI future, and why procurement, portability, and coordinated demand matter more.",
+
+  seoTitle: "Rethinking Europe’s AI Future",
+  seoDescription:
+    "Why Europe’s AI future depends less on chip production alone and more on procurement, portability, coordinated demand, and strategic optionality.",
+  strategicAngle:
+    "Europe’s AI weakness is not fragmentation itself, but fragmentation without coordinated demand, portability, and reversibility.",
+
+  date: "2025-12-13",
+  readingTime: 8,
+
+  tags: [
+    "Artificial Intelligence",
+    "Europe",
+    "China",
+    "Digital Sovereignty",
+    "Infrastructure",
+    "Procurement",
+  ],
+
+  sourceUrl:
+    "https://medium.com/@str4t0tt0/rethinking-europes-ai-future-lessons-from-china-s-strategic-approach-b7a6edfe8398",
+  sourceLabel: "Originally published on Medium",
+
+  contentPath: "rethinking-europes-ai-future.en.mdx",
+}
+ 
 ];
 
 export function getArticleByRoute(
