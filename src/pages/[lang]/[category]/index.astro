@@ -11,6 +11,7 @@ import {
 import { getArticlesByCategory } from "../../../data/articles";
 import { ui } from "../../../data/ui";
 import { site } from "../../../config/site";
+import CategoryHeader from "../../../components/category/CategoryHeader.astro";
 
 export function getStaticPaths() {
   return ["en", "fr"].flatMap((lang) =>
@@ -52,13 +53,7 @@ const pageDescription = categoryData.descriptions[lang];
   description={pageDescription}
   languageLinks={languageLinks}
 >
-  <section class="category-header">
-    <p class="eyebrow mono-label">STR4T0TT0 / {categoryData.labels[lang]}</p>
-
-    <h1>{categoryData.labels[lang]}</h1>
-
-    <p class="lead">{categoryData.descriptions[lang]}</p>
-  </section>
+  <CategoryHeader lang={lang} category={category} />
 
   <section class="article-list" aria-label={pageTitle}>
     {
@@ -85,33 +80,6 @@ const pageDescription = categoryData.descriptions[lang];
 </BaseLayout>
 
 <style>
-  .category-header {
-    max-width: 860px;
-    padding: 2rem 0 4rem;
-  }
-
-  .eyebrow {
-    color: var(--color-accent);
-    font-size: 0.8rem;
-    margin: 0 0 1rem;
-  }
-
-  h1 {
-    margin: 0;
-    font-family: var(--font-heading);
-    font-size: clamp(2.7rem, 8vw, 6rem);
-    line-height: 0.95;
-    letter-spacing: -0.06em;
-  }
-
-  .lead {
-    max-width: 720px;
-    margin: 2rem 0 0;
-    color: var(--color-muted);
-    font-size: clamp(1.2rem, 2vw, 1.45rem);
-    line-height: 1.45;
-  }
-
   .article-list {
     padding-bottom: 4rem;
   }
