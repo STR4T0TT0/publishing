@@ -4,6 +4,7 @@ import ArticleMeta from "../components/editorial/ArticleMeta.astro";
 import type { Language } from "../config/i18n";
 import type { CategorySlug } from "../config/categories";
 import type { ArticleImage } from "../data/articles";
+import SourceNote from "../components/editorial/SourceNote.astro";
 
 interface Props {
   lang: Language;
@@ -19,6 +20,8 @@ interface Props {
   languageLinks: Partial<Record<Language, string>>;
   heroImage?: ArticleImage;
   ogImage?: ArticleImage;
+  sourceUrl?: string;
+  sourceLabel?: string;
 }
 
 const {
@@ -35,6 +38,8 @@ const {
   languageLinks,
   heroImage,
   ogImage,
+  sourceUrl,
+  sourceLabel,
 } = Astro.props;
 ---
 
@@ -74,6 +79,8 @@ const {
     <div class="article-content">
       <slot />
     </div>
+
+    <SourceNote sourceUrl={sourceUrl} sourceLabel={sourceLabel} />
   </article>
 </BaseLayout>
 

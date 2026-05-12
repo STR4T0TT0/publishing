@@ -1,0 +1,49 @@
+---
+interface Props {
+  sourceUrl?: string;
+  sourceLabel?: string;
+}
+
+const { sourceUrl, sourceLabel } = Astro.props;
+---
+
+{
+  sourceUrl && sourceLabel && (
+    <aside class="source-note">
+      <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+        {sourceLabel}
+      </a>
+    </aside>
+  )
+}
+
+<style>
+  .source-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 3rem;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .source-note::before {
+    content: "";
+    width: 2px;
+    height: 1rem;
+    background: var(--color-accent);
+    opacity: 0.9;
+  }
+
+  .source-note a {
+    color: var(--color-muted);
+    transition: color 160ms ease;
+  }
+
+  .source-note a:hover {
+    color: var(--color-text);
+  }
+</style>
