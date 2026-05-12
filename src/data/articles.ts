@@ -210,7 +210,7 @@ export const articles: Article[] = [
 
   contentPath: "rethinking-europes-ai-future.en.mdx",
 }
- 
+
 ];
 
 export function getArticleByRoute(
@@ -257,6 +257,20 @@ export function getArticlesByCategory(
         article.language === language &&
         article.category === category &&
         article.published,
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
+}
+
+export function getFeaturedArticlesByLanguage(language: Language): Article[] {
+  return articles
+    .filter(
+      (article) =>
+        article.language === language &&
+        article.published &&
+        article.featured,
     )
     .sort(
       (a, b) =>

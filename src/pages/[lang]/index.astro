@@ -4,6 +4,8 @@ import HeroSection from "../../components/home/HeroSection.astro";
 import DomainGrid from "../../components/home/DomainGrid.astro";
 import { isLanguage, type Language } from "../../config/i18n";
 import { site } from "../../config/site";
+import HomeFeaturedArticle from "../../components/home/HomeFeaturedArticle.astro";
+import { getFeaturedArticlesByLanguage } from "../../data/articles";
 
 export function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];
@@ -16,6 +18,8 @@ if (!isLanguage(langParam)) {
 }
 
 const lang: Language = langParam;
+
+const featuredArticle = getFeaturedArticlesByLanguage(lang)[0];
 
 const languageLinks = {
   en: "/en/",
@@ -30,5 +34,10 @@ const languageLinks = {
   languageLinks={languageLinks}
 >
   <HeroSection lang={lang} />
+  {
+    featuredArticle && (
+      <HomeFeaturedArticle article={featuredArticle} lang={lang} />
+    )
+  }
   <DomainGrid lang={lang} />
 </BaseLayout>

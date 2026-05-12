@@ -1,0 +1,174 @@
+---
+import type { Article } from "../../data/articles";
+import type { Language } from "../../config/i18n";
+import { categories } from "../../config/categories";
+import { ui } from "../../data/ui";
+
+interface Props {
+  article: Article;
+  lang: Language;
+}
+
+const { article, lang } = Astro.props;
+const labels = ui[lang];
+
+const articleUrl = `/${article.language}/${article.category}/${article.slug}/`;
+
+const formattedDate = new Intl.DateTimeFormat(
+  lang === "fr" ? "fr-FR" : "en-US",
+  {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  },
+).format(new Date(article.date));
+---
+
+<section
+  class="home-featured"
+  aria-label={lang === "fr" ? "Article mis en avant" : "Featured article"}
+>
+  <div class="section-label mono-label">
+    {lang === "fr" ? "Analyse mise en avant" : "Featured analysis"}
+  </div>
+
+  <a href={articleUrl} class="featured-link">
+    {
+      article.heroImage && (
+        <div class="image-wrap">
+          <img src={article.heroImage.src} alt={article.heroImage.alt} />
+        </div>
+      )
+    }
+
+    <div class="content">
+      <div class="meta mono-label">
+        <span>{categories[article.category].labels[lang]}</span>
+        <span>{formattedDate}</span>
+        <span>{article.readingTime} {labels.meta.readingTime}</span>
+      </div>
+
+      <h2>{article.title}</h2>
+
+      <p>{article.description}</p>
+
+      <span class="read-link mono-label">{labels.cta.readMore}</span>
+    </div>
+  </a>
+</section>
+
+<style>
+  .home-featured {
+    margin: 0 0 4rem;
+  }
+
+  .section-label {
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  .featured-link {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background:
+      linear-gradient(135deg, rgba(163, 39, 20, 0.12), transparent 40%),
+      var(--color-surface);
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      transform 160ms ease;
+  }
+
+  .featured-link:hover {
+    border-color: rgba(163, 39, 20, 0.72);
+    transform: translateY(-2px);
+  }
+
+  .image-wrap {
+    border-bottom: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .image-wrap img {
+    display: block;
+    width: 100%;
+    max-height: 340px;
+    object-fit: cover;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.85rem;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+  }
+
+  .meta span + span::before {
+    content: "/";
+    margin-right: 0.85rem;
+    color: var(--color-border);
+  }
+
+  h2 {
+    max-width: 820px;
+    margin: 1.2rem 0 0.85rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 5vw, 3.8rem);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
+  }
+
+  p {
+    max-width: 680px;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  .read-link {
+    display: inline-flex;
+    margin-top: 1.5rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  @media (min-width: 960px) {
+    .featured-link {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    }
+
+    .image-wrap {
+      border-right: 1px solid var(--color-border);
+      border-bottom: 0;
+    }
+
+    .image-wrap img {
+      height: 100%;
+      max-height: none;
+    }
+
+    .content {
+      padding: 2rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .meta {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .meta span + span::before {
+      content: none;
+    }
+  }
+</style>
