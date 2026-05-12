@@ -50,6 +50,53 @@ export const articles: Article[] = [
     contentPath: 
       "what-the-chinese-ai-market-reveals.en.mdx",
   },
+  {
+
+    translationGroupId: "what-the-chinese-ai-market-reveals",
+
+    language: "fr",
+
+    category: "ai",
+
+    slug: "ce-que-revele-le-marche-chinois-de-l-ia",
+
+    canonical: false,
+
+    published: true,
+
+    featured: true,
+
+    title: "Ce que révèle le marché chinois de l’IA",
+
+    subtitle:
+
+      "Comment les marchés de capitaux évaluent et gèrent la valeur de l’intelligence artificielle avant que la crise ne devienne visible.",
+
+    description:
+
+      "Une analyse stratégique des signaux du marché chinois de l’IA, de l’intensité capitalistique, des contraintes de gouvernance et de la revalorisation précoce des hypothèses liées à l’IA.",
+
+    date: "2026-01-11",
+
+    readingTime: 16,
+
+    tags: [
+
+      "Intelligence artificielle",
+
+      "Marchés de capitaux",
+
+      "Gouvernance",
+
+      "Stratégie",
+
+      "Gestion du risque",
+
+    ],
+
+    contentPath: "what-the-chinese-ai-market-reveals.fr.mdx",
+
+  },
 ];
 
 export function getArticleByRoute(
