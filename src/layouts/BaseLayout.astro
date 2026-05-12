@@ -1,29 +1,65 @@
 ---
 import "../styles/global.css";
 import type { Language } from "../config/i18n";
-import { site } from "../config/site";
+import type { ArticleImage } from "../data/articles";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SeoHead from "../components/SeoHead.astro";
 
 interface Props {
   lang: Language;
   title: string;
   description: string;
   languageLinks: Partial<Record<Language, string>>;
+  canonicalUrl?: string;
+  ogImage?: ArticleImage;
+  type?: "website" | "article";
 }
 
-const { lang, title, description, languageLinks } = Astro.props;
+const {
+  lang,
+  title,
+  description,
+  languageLinks,
+  canonicalUrl = Astro.url.pathname,
+  ogImage,
+  type = "website",
+} = Astro.props;
 
-const pageTitle =
-  title === site.title ? site.title : `${title} — ${site.title}`;
+type AlternateUrl = {
+  lang: Language | "x-default";
+  url: string;
+};
+
+const alternateUrls: AlternateUrl[] = Object.entries(languageLinks)
+  .filter((entry): entry is [Language, string] => Boolean(entry[1])) //nettoyer les langues indisponibles
+  .map(([language, url]) => ({
+    lang: language,
+    url,
+  }));
+
+if (languageLinks.en) {
+  alternateUrls.push({
+    lang: "x-default",
+    url: languageLinks.en,
+  });
+}
 ---
 
 <html lang={lang} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{pageTitle}</title>
-    <meta name="description" content={description} />
+
+    <SeoHead
+      title={title}
+      description={description}
+      canonicalUrl={canonicalUrl}
+      lang={lang}
+      alternateUrls={alternateUrls}
+      ogImage={ogImage}
+      type={type}
+    />
   </head>
 
   <body>

@@ -1,0 +1,92 @@
+---
+import { site } from "../config/site";
+import type { Language } from "../config/i18n";
+import type { ArticleImage } from "../data/articles";
+
+interface AlternateUrl {
+  lang: Language | "x-default";
+  url: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  lang: Language;
+  alternateUrls?: AlternateUrl[];
+  ogImage?: ArticleImage;
+  type?: "website" | "article";
+}
+
+const {
+  title,
+  description,
+  canonicalUrl,
+  lang,
+  alternateUrls = [],
+  ogImage,
+  type = "website",
+} = Astro.props;
+
+const pageTitle = title === site.title ? site.title : `${title} — ${site.title}`;
+
+const absoluteCanonicalUrl = canonicalUrl.startsWith("http")
+  ? canonicalUrl
+  : `${site.url}${canonicalUrl}`;
+
+const absoluteOgImageUrl = ogImage?.src
+  ? ogImage.src.startsWith("http")
+    ? ogImage.src
+    : `${site.url}${ogImage.src}`
+  : undefined;
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+
+<link rel="canonical" href={absoluteCanonicalUrl} />
+
+{
+  alternateUrls.map((alternate) => {
+    const absoluteUrl = alternate.url.startsWith("http")
+      ? alternate.url
+      : `${site.url}${alternate.url}`;
+
+    return (
+      <link
+        rel="alternate"
+        hreflang={alternate.lang}
+        href={absoluteUrl}
+      />
+    );
+  })
+}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={absoluteCanonicalUrl} />
+<meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_US"} />
+
+{
+  absoluteOgImageUrl && (
+    <>
+      <meta property="og:image" content={absoluteOgImageUrl} />
+      <meta
+        property="og:image:alt"
+        content={ogImage?.alt ?? pageTitle}
+      />
+    </>
+  )
+}
+
+<meta name="twitter:card" content={absoluteOgImageUrl ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+
+{
+  absoluteOgImageUrl && (
+    <meta name="twitter:image" content={absoluteOgImageUrl} />
+  )
+}
