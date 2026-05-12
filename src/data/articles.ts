@@ -89,7 +89,7 @@ export const articles: Article[] = [
 
     ogImage: {
       src: "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-en-og.webp",
-      alt: "What the Chinese AI Market Reveals, STR4T0TT0 social preview.",
+      alt: "Artificial intelligence as Infrastructure (A2I)",
 },
   },
   {
@@ -147,7 +147,7 @@ export const articles: Article[] = [
 
     ogImage: {
       src: "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-fr-og.webp",
-      alt: "Ce que révèle le marché chinois de l’IA, aperçu social STR4T0TT0.",
+      alt: "L'intelligence artificielle en tant qu'infrastructure (A2I)",
 },
 
   },

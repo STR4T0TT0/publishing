@@ -64,10 +64,14 @@ const languageLinks = getArticleTranslations(article);
   title={article.title}
   subtitle={article.subtitle}
   description={article.description}
+  seoTitle={article.seoTitle}
+  seoDescription={article.seoDescription}
   category={article.category}
+  slug={article.slug}
   date={article.date}
   readingTime={article.readingTime}
   languageLinks={languageLinks}
+  ogImage={article.ogImage}
 >
   <Content />
 </ArticleLayout>

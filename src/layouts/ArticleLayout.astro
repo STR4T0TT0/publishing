@@ -3,18 +3,22 @@ import BaseLayout from "./BaseLayout.astro";
 import ArticleMeta from "../components/editorial/ArticleMeta.astro";
 import type { Language } from "../config/i18n";
 import type { CategorySlug } from "../config/categories";
+import type { ArticleImage } from "../data/articles";
 
 interface Props {
   lang: Language;
   title: string;
   subtitle: string;
   description: string;
+  seoTitle?: string;
+  seoDescription?: string;
   category: CategorySlug;
+  slug: string;
   date: string;
   readingTime: number;
   languageLinks: Partial<Record<Language, string>>;
-  heroImage?: string;
-  heroAlt?: string;
+  heroImage?: ArticleImage;
+  ogImage?: ArticleImage;
 }
 
 const {
@@ -22,20 +26,26 @@ const {
   title,
   subtitle,
   description,
+  seoTitle,
+  seoDescription,
   category,
+  slug,
   date,
   readingTime,
   languageLinks,
   heroImage,
-  heroAlt,
+  ogImage,
 } = Astro.props;
 ---
 
 <BaseLayout
   lang={lang}
-  title={title}
-  description={description}
+  title={seoTitle ?? title}
+  description={seoDescription ?? description}
+  canonicalUrl={`/${lang}/${category}/${slug}/`}
   languageLinks={languageLinks}
+  ogImage={ogImage}
+  type="article"
 >
   <article class="article-shell">
     <header class="article-header">
@@ -54,7 +64,9 @@ const {
     {
       heroImage && (
         <figure class="article-hero">
-          <img src={heroImage} alt={heroAlt ?? ""} />
+          <img src={heroImage.src} alt={heroImage.alt} />
+
+          {heroImage.caption && <figcaption>{heroImage.caption}</figcaption>}
         </figure>
       )
     }
@@ -100,6 +112,15 @@ const {
   .article-hero img {
     display: block;
     width: 100%;
+  }
+
+  .article-hero figcaption {
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.45;
   }
 
   .article-content {
