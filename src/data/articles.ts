@@ -87,9 +87,19 @@ export const articles: Article[] = [
       "https://medium.com/@str4t0tt0/what-the-chinese-ai-market-reveals-10cc19a68f01",
     sourceLabel: "Originally published on Medium",
 
+    heroImage: {
+      src: 
+        "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-en-hero.webp",
+      alt: 
+        "Artificial intelligence as Infrastructure (A2I)",
+      caption:
+        "AI markets increasingly price infrastructure control, dependency, and strategic optionality.",
+},
+
     ogImage: {
       src: "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-en-og.webp",
       alt: "Artificial intelligence as Infrastructure (A2I)",
+    
 },
   },
   {
@@ -144,6 +154,15 @@ export const articles: Article[] = [
       "Comment les signaux du marché chinois de l’IA révèlent l’intensité capitalistique, les contraintes de gouvernance et la revalorisation précoce des hypothèses liées à l’IA.",
     strategicAngle:
       "Les signaux du marché chinois de l’IA révèlent comment le capital commence à valoriser le risque d’infrastructure avant la crise visible.",
+
+    heroImage: {
+      src: 
+        "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-fr-hero.webp",
+      alt: 
+        "L’intelligence artificielle en tant qu’infrastructure (A2I)",
+      caption:
+        "Les marchés de l’IA valorisent de plus en plus le contrôle d’infrastructure, la dépendance et l’optionalité stratégique.",
+},
 
     ogImage: {
       src: "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-fr-og.webp",
