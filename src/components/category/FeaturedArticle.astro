@@ -1,0 +1,193 @@
+---
+import type { Article } from "../../data/articles";
+import type { Language } from "../../config/i18n";
+import { categories } from "../../config/categories";
+import { ui } from "../../data/ui";
+
+interface Props {
+  article: Article;
+  lang: Language;
+}
+
+const { article, lang } = Astro.props;
+const labels = ui[lang];
+
+const articleUrl = `/${article.language}/${article.category}/${article.slug}/`;
+
+const formattedDate = new Intl.DateTimeFormat(
+  lang === "fr" ? "fr-FR" : "en-US",
+  {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  },
+).format(new Date(article.date));
+---
+
+<section
+  class="featured-article"
+  aria-label={lang === "fr" ? "Article mis en avant" : "Featured article"}
+>
+  <a href={articleUrl} class="featured-card">
+    {
+      article.heroImage && (
+        <div class="featured-image-wrap">
+          <img
+            src={article.heroImage.src}
+            alt={article.heroImage.alt}
+            class="featured-image"
+          />
+        </div>
+      )
+    }
+
+    <div class="featured-content">
+      <p class="featured-label mono-label">
+        {lang === "fr" ? "Analyse mise en avant" : "Featured analysis"}
+      </p>
+
+      <div class="featured-meta mono-label">
+        <span>{categories[article.category].labels[lang]}</span>
+        <span>{formattedDate}</span>
+        <span>{article.readingTime} {labels.meta.readingTime}</span>
+      </div>
+
+      <h2>{article.title}</h2>
+
+      <p class="description">{article.description}</p>
+
+      {article.strategicAngle && <p class="angle">{article.strategicAngle}</p>}
+
+      <span class="read-link mono-label">{labels.cta.readMore}</span>
+    </div>
+  </a>
+</section>
+
+<style>
+  .featured-article {
+    margin: 0 0 2rem;
+  }
+
+  .featured-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background:
+      linear-gradient(135deg, rgba(163, 39, 20, 0.14), transparent 42%),
+      var(--color-surface);
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      transform 160ms ease;
+  }
+
+  .featured-card:hover {
+    border-color: rgba(163, 39, 20, 0.72);
+    transform: translateY(-2px);
+  }
+
+  .featured-image-wrap {
+    min-height: 220px;
+    border-bottom: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .featured-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 360px;
+    object-fit: cover;
+    filter: grayscale(100%);
+  }
+
+  .featured-content {
+    padding: 1.5rem;
+  }
+
+  .featured-label {
+    margin: 0 0 1.25rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  .featured-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.85rem;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+  }
+
+  .featured-meta span + span::before {
+    content: "/";
+    margin-right: 0.85rem;
+    color: var(--color-border);
+  }
+
+  h2 {
+    max-width: 760px;
+    margin: 1.25rem 0 0.85rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 5vw, 3.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
+  }
+
+  .description {
+    max-width: 680px;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  .angle {
+    max-width: 680px;
+    margin: 1.25rem 0 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-accent);
+    color: var(--color-text);
+    line-height: 1.55;
+  }
+
+  .read-link {
+    display: inline-flex;
+    margin-top: 1.5rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  @media (min-width: 960px) {
+    .featured-card {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+
+    .featured-image-wrap {
+      min-height: 100%;
+      border-right: 1px solid var(--color-border);
+      border-bottom: 0;
+    }
+
+    .featured-image {
+      height: 100%;
+      max-height: none;
+    }
+
+    .featured-content {
+      padding: 2rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .featured-meta {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .featured-meta span + span::before {
+      content: none;
+    }
+  }
+</style>

@@ -12,6 +12,7 @@ import { getArticlesByCategory } from "../../../data/articles";
 import { ui } from "../../../data/ui";
 import { site } from "../../../config/site";
 import CategoryHeader from "../../../components/category/CategoryHeader.astro";
+import FeaturedArticle from "../../../components/category/FeaturedArticle.astro";
 
 export function getStaticPaths() {
   return ["en", "fr"].flatMap((lang) =>
@@ -37,6 +38,10 @@ const categoryData = categories[category];
 const labels = ui[lang];
 
 const categoryArticles = getArticlesByCategory(lang, category);
+const featuredArticle = categoryArticles.find((article) => article.featured);
+const remainingArticles = featuredArticle
+  ? categoryArticles.filter((article) => article.slug !== featuredArticle.slug)
+  : categoryArticles;
 
 const languageLinks = {
   en: `/en/${category}/`,
@@ -58,17 +63,25 @@ const pageDescription = categoryData.descriptions[lang];
   <section class="article-list" aria-label={pageTitle}>
     {
       categoryArticles.length > 0 ? (
-        <div class="article-grid">
-          {categoryArticles.map((article) => (
-            <ArticleCard article={article} lang={lang} />
-          ))}
-        </div>
+        <>
+          {featuredArticle && (
+            <FeaturedArticle article={featuredArticle} lang={lang} />
+          )}
+
+          {remainingArticles.length > 0 && (
+            <div class="article-grid">
+              {remainingArticles.map((article) => (
+                <ArticleCard article={article} lang={lang} />
+              ))}
+            </div>
+          )}
+        </>
       ) : (
         <div class="empty-state">
           <p class="mono-label">
             {lang === "fr"
-              ? "Aucun article publié pour l’instant."
-              : "No articles published yet."}
+              ? "Aucune analyse publiée dans cette catégorie pour l’instant."
+              : "No published analysis in this category yet."}
           </p>
           <a href={`/${lang}/`} class="back-link mono-label">
             {lang === "fr" ? "Retour à l’accueil" : "Back to home"}
