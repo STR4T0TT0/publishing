@@ -1,6 +1,18 @@
 import type { Language } from "../config/i18n";
 import type { CategorySlug } from "../config/categories";
 
+export interface ArticleImage {
+  src: string;
+  alt: string;
+  caption?: string;
+  credit?: string;
+}
+
+export interface ArticleInfographic extends ArticleImage {
+  title: string;
+  format: "square" | "portrait" | "landscape" | "carousel";
+  usage: Array<"article" | "linkedin" | "x" | "bluesky" | "newsletter">;
+}
 export interface Article {
   translationGroupId: string;
   language: Language;
@@ -19,6 +31,20 @@ export interface Article {
 
   tags: string[];
   contentPath: string;
+
+  seoTitle: string;
+  seoDescription: string;
+  strategicAngle: string;
+
+  updated?: string;
+
+  heroImage?: ArticleImage;
+  ogImage?: ArticleImage;
+  inlineMedia?: ArticleImage[];
+  infographics?: ArticleInfographic[];
+
+  sourceUrl?: string;
+  sourceLabel?: string;
 }
 
 export const articles: Article[] = [
@@ -49,6 +75,22 @@ export const articles: Article[] = [
     ],
     contentPath: 
       "what-the-chinese-ai-market-reveals.en.mdx",
+    
+    seoTitle: 
+      "What the Chinese AI Market Reveals",
+    seoDescription:
+      "How Chinese AI market signals reveal capital intensity, governance constraints, and the early repricing of AI assumptions.",
+    strategicAngle:
+      "Chinese AI market signals reveal how capital begins pricing AI infrastructure risk before visible crisis.",
+
+    sourceUrl:
+      "https://medium.com/@str4t0tt0/what-the-chinese-ai-market-reveals-10cc19a68f01",
+    sourceLabel: "Originally published on Medium",
+
+    ogImage: {
+      src: "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-en-og.webp",
+      alt: "What the Chinese AI Market Reveals, STR4T0TT0 social preview.",
+},
   },
   {
 
@@ -95,6 +137,18 @@ export const articles: Article[] = [
     ],
 
     contentPath: "what-the-chinese-ai-market-reveals.fr.mdx",
+
+    seoTitle: 
+      "Ce que révèle le marché chinois de l’IA",
+    seoDescription:
+      "Comment les signaux du marché chinois de l’IA révèlent l’intensité capitalistique, les contraintes de gouvernance et la revalorisation précoce des hypothèses liées à l’IA.",
+    strategicAngle:
+      "Les signaux du marché chinois de l’IA révèlent comment le capital commence à valoriser le risque d’infrastructure avant la crise visible.",
+
+    ogImage: {
+      src: "/images/articles/ai/what-the-chinese-ai-market-reveals/ai-chinese-ai-market-fr-og.webp",
+      alt: "Ce que révèle le marché chinois de l’IA, aperçu social STR4T0TT0.",
+},
 
   },
 ];
