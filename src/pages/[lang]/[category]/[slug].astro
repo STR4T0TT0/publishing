@@ -3,30 +3,29 @@ import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import ArticleLayout from "../../../layouts/ArticleLayout.astro";
 import { isLanguage, type Language } from "../../../config/i18n";
 import { isCategory, type CategorySlug } from "../../../config/categories";
+import { render } from "astro:content";
+
 import {
-  articles,
-  getArticleByRoute,
-  getArticleTranslations,
-} from "../../../data/articles";
+  getPublishedArticleEntriesFromCollection,
+  getArticleEntryByRouteFromCollection,
+  getArticleTranslationsFromCollection,
+  toArticle,
+} from "../../../data/articleCollection";
 
 type MdxModule = {
   default: AstroComponentFactory;
 };
 
-const mdxModules = import.meta.glob<MdxModule>(
-  "../../../content/articles/*.mdx",
-);
+export async function getStaticPaths() {
+  const entries = await getPublishedArticleEntriesFromCollection();
 
-export function getStaticPaths() {
-  return articles
-    .filter((article) => article.published)
-    .map((article) => ({
-      params: {
-        lang: article.language,
-        category: article.category,
-        slug: article.slug,
-      },
-    }));
+  return entries.map((entry) => ({
+    params: {
+      lang: entry.data.language,
+      category: entry.data.category,
+      slug: entry.data.slug,
+    },
+  }));
 }
 
 const langParam = Astro.params.lang;
@@ -40,23 +39,20 @@ if (!isLanguage(langParam) || !isCategory(categoryParam) || !slugParam) {
 const lang: Language = langParam;
 const category: CategorySlug = categoryParam;
 
-const article = getArticleByRoute(lang, category, slugParam);
+const articleEntry = await getArticleEntryByRouteFromCollection(
+  lang,
+  category,
+  slugParam,
+);
 
-if (!article) {
+if (!articleEntry) {
   return Astro.redirect("/404");
 }
 
-const mdxPath = `../../../content/articles/${article.contentPath}`;
-const mdxLoader = mdxModules[mdxPath];
+const article = toArticle(articleEntry);
+const languageLinks = await getArticleTranslationsFromCollection(article);
+const { Content } = await render(articleEntry);
 
-if (!mdxLoader) {
-  throw new Error(`Missing MDX content file: ${article.contentPath}`);
-}
-
-const mdxModule = await mdxLoader();
-const Content = mdxModule.default;
-
-const languageLinks = getArticleTranslations(article);
 ---
 
 <ArticleLayout

@@ -3,7 +3,7 @@ import type { Article } from "./articles";
 import type { Language } from "../config/i18n";
 import type { CategorySlug } from "../config/categories";
 
-type ArticleEntry = CollectionEntry<"articles">;
+export type ArticleEntry = CollectionEntry<"articles">;
 
 function getContentPath(entry: ArticleEntry): string {
   if (entry.id.endsWith(".md") || entry.id.endsWith(".mdx")) {
@@ -13,7 +13,7 @@ function getContentPath(entry: ArticleEntry): string {
   return `${entry.id}.mdx`;
 }
 
-function toArticle(entry: ArticleEntry): Article {
+export function toArticle(entry: ArticleEntry): Article {
   return {
     ...entry.data,
     contentPath: getContentPath(entry),
@@ -119,4 +119,31 @@ export async function getPublishedArticleCountByCategoryFromCollection(
       article.language === language &&
       article.category === category,
   ).length;
+}
+
+// garder à la fin du fichier car pour la route article on a besoin de l’entry Astro complet
+export async function getPublishedArticleEntriesFromCollection(): Promise<ArticleEntry[]> {
+  const entries = await getCollection("articles");
+
+  return entries
+    .filter((entry) => entry.data.published)
+    .sort(
+      (a, b) =>
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    );
+}
+
+export async function getArticleEntryByRouteFromCollection(
+  language: Language,
+  category: CategorySlug,
+  slug: string,
+): Promise<ArticleEntry | undefined> {
+  const entries = await getPublishedArticleEntriesFromCollection();
+
+  return entries.find(
+    (entry) =>
+      entry.data.language === language &&
+      entry.data.category === category &&
+      entry.data.slug === slug,
+  );
 }
