@@ -56,7 +56,7 @@ export const ui: Record<
       newsletter: "Subscribe to the newsletter",
     },
     footer: {
-      staging: "Staging environment. Authorized access only.",
+      staging: "© STR4T0TT0. All rights reserved. Code MIT.",
     },
     meta: {
       readingTime: "min read",
@@ -86,7 +86,7 @@ export const ui: Record<
       newsletter: "S’abonner à la newsletter",
     },
     footer: {
-      staging: "Environnement de staging. Accès autorisé uniquement.",
+      staging: "© STR4T0TT0. Tous droits réservés. Code sous licence MIT.",
     },
     meta: {
       readingTime: "min read",

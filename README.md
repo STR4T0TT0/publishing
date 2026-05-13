@@ -1,46 +1,54 @@
-# Astro Starter Kit: Basics
+# STR4T0TT0 Publishing Platform
 
-```sh
-npm create astro@latest -- --template basics
-```
+An editorial publishing platform for strategic intelligence on AI, cybersecurity, and crypto.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Purpose
 
-## 🚀 Project Structure
+STR4T0TT0 explores how digital systems become strategic risk: where power concentrates, risk reprices, and decision-makers lose or regain optionality.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Stack
+
+- Astro framework
+- MDX
+- Cloudflare Pages
+- TypeScript
+- Custom bilingual routing
+- Git-based editorial workflow
+
+## Current status
+
+Implemented in this staging version :
+- EN/FR routing
+- Category pages
+- Article pages
+- MDX content
+- SEO metadata
+- Open Graph images
+- Cloudflare Pages deployment
+- Cloudflare Access staging protection
+
+## Content model
+
+Articles use:
+
+- metadata in `src/data/articles.ts`
+- body content in `src/content/articles/*.mdx`
+- media assets in `public/images/articles/[category]/[article-slug]/`
+
+## Image convention
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+public/images/articles/[category]/[article-slug]/
+[category]-[image-topic]-[lang]-[image-type].webp
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## License
 
-## 🧞 Commands
+This repository uses a mixed licensing model:
 
-All commands are run from the root of the project, from a terminal:
+- Source code is released under the MIT License.
+- Editorial content, articles, visual assets, logos, and STR4T0TT0 brand assets are not licensed under MIT.
+- STR4T0TT0 content and brand assets are © STR4T0TT0. All rights reserved unless explicitly stated otherwise.
+- Public references, excerpts, and screenshots are allowed with clear attribution to STR4T0TT0 and a link to the original repository or website.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The STR4T0TT0 name, logo, and visual identity may not be reused as a trademark, brand identity, or endorsement signal without permission.
