@@ -8,7 +8,7 @@ import {
   isCategory,
   type CategorySlug,
 } from "../../../config/categories";
-import { getArticlesByCategory } from "../../../data/articles";
+import { getArticlesByCategoryFromCollection } from "../../../data/articleCollection";
 import { ui } from "../../../data/ui";
 import { site } from "../../../config/site";
 import CategoryHeader from "../../../components/category/CategoryHeader.astro";
@@ -39,7 +39,10 @@ const category: CategorySlug = categoryParam;
 const categoryData = categories[category];
 const labels = ui[lang];
 
-const categoryArticles = getArticlesByCategory(lang, category);
+const categoryArticles = await getArticlesByCategoryFromCollection(
+  lang,
+  category,
+);
 const featuredArticle = categoryArticles.find((article) => article.featured);
 const remainingArticles = featuredArticle
   ? categoryArticles.filter((article) => article.slug !== featuredArticle.slug)
