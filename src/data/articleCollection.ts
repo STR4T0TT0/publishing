@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry } from "astro:content";
-import type { Article } from "./articles";
+import type { Article } from "./articleTypes";
 import type { Language } from "../config/i18n";
 import type { CategorySlug } from "../config/categories";
 
