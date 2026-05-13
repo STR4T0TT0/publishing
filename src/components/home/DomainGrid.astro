@@ -2,13 +2,25 @@
 import { categories } from "../../config/categories";
 import type { Language } from "../../config/i18n";
 import { ui } from "../../data/ui";
-import { getPublishedArticleCountByCategory } from "../../data/articles";
-
+import { getPublishedArticleCountByCategoryFromCollection } from "../../data/articleCollection";
 interface Props {
   lang: Language;
 }
 
 const { lang } = Astro.props;
+
+//calcule les compteurs avant le JSX parce que fonction est async
+const domainItems = await Promise.all(
+  Object.values(categories).map(async (category, index) => ({
+    category,
+    index,
+    articleCount: await getPublishedArticleCountByCategoryFromCollection(
+      lang,
+      category.slug,
+    ),
+  })),
+);
+
 const labels = ui[lang];
 ---
 
@@ -19,33 +31,26 @@ const labels = ui[lang];
 
   <div class="domain-grid">
     {
-      Object.values(categories).map((category, index) => {
-        const articleCount = getPublishedArticleCountByCategory(
-          lang,
-          category.slug,
-        );
+      domainItems.map(({ category, index, articleCount }) => (
+        <a href={`/${lang}/${category.slug}/`} class="domain-card">
+          <span class="mono-label">{String(index + 1).padStart(2, "0")}</span>
 
-        return (
-          <a href={`/${lang}/${category.slug}/`} class="domain-card">
-            <span class="mono-label">{String(index + 1).padStart(2, "0")}</span>
+          <h2>{category.labels[lang]}</h2>
 
-            <h2>{category.labels[lang]}</h2>
+          <p>{category.descriptions[lang]}</p>
 
-            <p>{category.descriptions[lang]}</p>
-
-            <div class="article-count mono-label">
-              {articleCount}{" "}
-              {lang === "fr"
-                ? articleCount > 1
-                  ? "articles publiés"
-                  : "article publié"
-                : articleCount > 1
-                  ? "published articles"
-                  : "published article"}
-            </div>
-          </a>
-        );
-      })
+          <div class="article-count mono-label">
+            {articleCount}{" "}
+            {lang === "fr"
+              ? articleCount > 1
+                ? "articles publiés"
+                : "article publié"
+              : articleCount > 1
+                ? "published articles"
+                : "published article"}
+          </div>
+        </a>
+      ))
     }
   </div>
 </section>
