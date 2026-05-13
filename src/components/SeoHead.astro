@@ -28,7 +28,8 @@ const {
   type = "website",
 } = Astro.props;
 
-const pageTitle = title === site.title ? site.title : `${title} — ${site.title}`;
+const pageTitle =
+  title === site.title ? site.title : `${title} / ${site.title}`;
 
 const absoluteCanonicalUrl = canonicalUrl.startsWith("http")
   ? canonicalUrl
@@ -53,11 +54,7 @@ const absoluteOgImageUrl = ogImage?.src
       : `${site.url}${alternate.url}`;
 
     return (
-      <link
-        rel="alternate"
-        hreflang={alternate.lang}
-        href={absoluteUrl}
-      />
+      <link rel="alternate" hreflang={alternate.lang} href={absoluteUrl} />
     );
   })
 }
@@ -73,15 +70,15 @@ const absoluteOgImageUrl = ogImage?.src
   absoluteOgImageUrl && (
     <>
       <meta property="og:image" content={absoluteOgImageUrl} />
-      <meta
-        property="og:image:alt"
-        content={ogImage?.alt ?? pageTitle}
-      />
+      <meta property="og:image:alt" content={ogImage?.alt ?? pageTitle} />
     </>
   )
 }
 
-<meta name="twitter:card" content={absoluteOgImageUrl ? "summary_large_image" : "summary"} />
+<meta
+  name="twitter:card"
+  content={absoluteOgImageUrl ? "summary_large_image" : "summary"}
+/>
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />
 
