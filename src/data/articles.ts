@@ -204,6 +204,18 @@ export const articles: Article[] = [
     "Procurement",
   ],
 
+  heroImage: {
+  src: "/images/articles/ai/rethinking-europes-ai-future/ai-europe-ai-future-en-hero.webp",
+  alt: "Abstract strategic visualization of Europe’s AI infrastructure, software dependency, and industrial coordination.",
+  caption:
+    "Europe’s AI future depends less on isolated chip production than on coordinated demand, software portability, and strategic optionality.",
+},
+
+  ogImage: {
+    src: "/images/articles/ai/rethinking-europes-ai-future/ai-europe-ai-future-en-og.webp",
+   alt: "Rethinking Europe’s AI Future — STR4T0TT0 social preview.",
+},
+
   sourceUrl:
     "https://medium.com/@str4t0tt0/rethinking-europes-ai-future-lessons-from-china-s-strategic-approach-b7a6edfe8398",
   sourceLabel: "Originally published on Medium",
