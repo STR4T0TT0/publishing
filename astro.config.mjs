@@ -1,9 +1,21 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
+import AutoImport from "astro-auto-import";
 
-import mdx from '@astrojs/mdx';
-
-// https://astro.build/config
 export default defineConfig({
-  integrations: [mdx()]
+  integrations: [
+    AutoImport({
+      imports: [
+        {
+          "./src/components/editorial/PullQuote.astro": [
+            ["default", "PullQuote"],
+          ],
+          "./src/components/editorial/StrategicTakeaways.astro": [
+            ["default", "StrategicTakeaways"],
+          ],
+        },
+      ],
+    }),
+    mdx(),
+  ],
 });
