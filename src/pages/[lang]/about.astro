@@ -1,0 +1,247 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { Language } from "../../config/i18n";
+import { site } from "../../config/site";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];
+}
+
+const { lang } = Astro.params;
+
+if (lang !== "en" && lang !== "fr") {
+  return Astro.redirect("/en/");
+}
+
+const currentLang = lang as Language;
+
+const languageLinks = {
+  en: "/en/about/",
+  fr: "/fr/about/",
+};
+
+const content = {
+  en: {
+    title: "About STR4T0TT0",
+    eyebrow: "Strategic intelligence platform",
+    intro:
+      "STR4T0TT0 is a dark-first editorial platform focused on AI, cybersecurity, crypto, and digital systems risk.",
+    body: [
+      "It reads technology not as trend, but as infrastructure: where power concentrates, risk reprices, and decision-makers lose or regain strategic optionality.",
+      "Written by a senior IT infrastructure leader, STR4T0TT0 connects operational reality with executive-level analysis.",
+      "The goal is simple: help technically literate readers, professionals, and decision-makers understand how digital systems become strategic exposure.",
+    ],
+    focusTitle: "Editorial focus",
+    focusIntro: "STR4T0TT0 explores three domains:",
+    focusItems: [
+      "AI as infrastructure, capital allocation, and governance pressure.",
+      "Cybersecurity as resilience, exposure, and systemic risk.",
+      "Crypto as programmable value, enforcement limits, and market structure.",
+    ],
+    stance:
+      "The perspective is strategic, not promotional: no hype cycle, no generic tech commentary, no surface-level futurism.",
+    linksTitle: "External presence",
+    linksIntro:
+      "STR4T0TT0 also publishes and signals across selected platforms:",
+  },
+  fr: {
+    title: "À propos de STR4T0TT0",
+    eyebrow: "Plateforme d’intelligence stratégique",
+    intro:
+      "STR4T0TT0 est une plateforme éditoriale dark-first consacrée à l’IA, à la cybersécurité, à la crypto et au risque des systèmes numériques.",
+    body: [
+      "Elle analyse la technologie non comme une tendance, mais comme une infrastructure : là où le pouvoir se concentre, où le risque se revalorise, et où les décideurs perdent ou regagnent de l’optionalité stratégique.",
+      "Rédigé par un responsable senior en infrastructure IT, STR4T0TT0 relie la réalité opérationnelle à une lecture stratégique de niveau décisionnel.",
+      "L’objectif est simple : aider les lecteurs techniquement avertis, les professionnels et les décideurs à comprendre comment les systèmes numériques deviennent une exposition stratégique.",
+    ],
+    focusTitle: "Ligne éditoriale",
+    focusIntro: "STR4T0TT0 explore trois domaines :",
+    focusItems: [
+      "l’IA comme infrastructure, allocation du capital et pression de gouvernance ;",
+      "la cybersécurité comme résilience, exposition et risque systémique ;",
+      "la crypto comme valeur programmable, limite d’application réglementaire et structure de marché.",
+    ],
+    stance:
+      "La perspective est stratégique, pas promotionnelle : pas de cycle de hype, pas de commentaire tech générique, pas de futurisme superficiel.",
+    linksTitle: "Présence externe",
+    linksIntro:
+      "STR4T0TT0 publie et signale également sur plusieurs plateformes :",
+  },
+}[currentLang];
+
+const externalLinks = [
+  {
+    label: "Medium",
+    href: "https://medium.com/@str4t0tt0",
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/STR4T0TT0",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/alexis-c-59a779a5/",
+  },
+  {
+    label: "X",
+    href: "https://x.com/str4t0tt0",
+  },
+  {
+    label: "Mastodon",
+    href: "https://mastodon.social/@str4t0tt0",
+  },
+  {
+    label: "Bluesky",
+    href: "https://bsky.app/profile/str4t0tt0.bsky.social",
+  },
+];
+---
+
+<BaseLayout
+  lang={currentLang}
+  title={content.title}
+  description={content.intro}
+  languageLinks={languageLinks}
+>
+  <main class="about-page">
+    <section class="about-hero">
+      <p class="eyebrow mono-label">{content.eyebrow}</p>
+      <h1>{content.title}</h1>
+      <p class="intro">{content.intro}</p>
+    </section>
+
+    <section class="about-body">
+      {content.body.map((paragraph) => <p>{paragraph}</p>)}
+    </section>
+
+    <section class="about-section">
+      <p class="section-label mono-label">{content.focusTitle}</p>
+      <p>{content.focusIntro}</p>
+
+      <ul>
+        {content.focusItems.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <p>{content.stance}</p>
+    </section>
+
+    <section class="about-section">
+      <p class="section-label mono-label">{content.linksTitle}</p>
+      <p>{content.linksIntro}</p>
+
+      <div class="external-links">
+        {
+          externalLinks.map((link) => (
+            <a href={link.href} target="_blank" rel="noopener noreferrer">
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .about-page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 6rem 1.25rem 7rem;
+  }
+
+  .about-hero {
+    margin-bottom: 4rem;
+  }
+
+  .eyebrow,
+  .section-label {
+    color: var(--color-accent);
+    font-size: 0.72rem;
+  }
+
+  h1 {
+    max-width: 820px;
+    margin: 1rem 0 1.5rem;
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.07em;
+  }
+
+  .intro {
+    max-width: 760px;
+    color: var(--color-muted);
+    font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+    line-height: 1.5;
+  }
+
+  .about-body,
+  .about-section {
+    max-width: 760px;
+    margin-bottom: 3.5rem;
+  }
+
+  p {
+    color: var(--color-text);
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .about-body p,
+  .about-section p {
+    margin: 0 0 1.4rem;
+  }
+
+  ul {
+    margin: 1.5rem 0 2rem;
+    padding-left: 1.25rem;
+  }
+
+  li {
+    margin-bottom: 0.9rem;
+    color: var(--color-muted);
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+
+  .external-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .external-links a {
+    border: 1px solid var(--color-border);
+    padding: 0.75rem 0.95rem;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition:
+      border-color 160ms ease,
+      color 160ms ease,
+      background 160ms ease;
+  }
+
+  .external-links a:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: rgba(163, 39, 20, 0.08);
+  }
+
+  @media (max-width: 720px) {
+    .about-page {
+      padding-top: 4rem;
+    }
+
+    .external-links {
+      flex-direction: column;
+    }
+
+    .external-links a {
+      width: 100%;
+    }
+  }
+</style>
