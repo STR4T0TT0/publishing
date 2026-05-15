@@ -25,6 +25,7 @@ export const ui: Record<
       newsletter: string;
     };
     footer: {
+      brandLine: string;
       staging: string;
     };
     meta: {
@@ -56,6 +57,7 @@ export const ui: Record<
       newsletter: "Subscribe to the newsletter",
     },
     footer: {
+      brandLine: "Strategic intelligence briefing",
       staging: "© STR4T0TT0. All rights reserved. Code MIT.",
     },
     meta: {
@@ -86,6 +88,7 @@ export const ui: Record<
       newsletter: "S’abonner à la newsletter",
     },
     footer: {
+      brandLine: "Strategic intelligence briefing",
       staging: "© STR4T0TT0. Tous droits réservés. Code sous licence MIT.",
     },
     meta: {
