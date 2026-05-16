@@ -23,8 +23,8 @@ export const categories: Record<
       fr: "IA",
     },
     descriptions: {
-      en: "Strategic analysis of artificial intelligence as infrastructure, capital allocation, and governance pressure.",
-      fr: "Analyse stratégique de l’intelligence artificielle comme infrastructure, allocation du capital et pression de gouvernance.",
+      en: "Strategic analysis of artificial intelligence as infrastructure, investment pressure, and governance constraint.",
+      fr: "Analyse stratégique de l’intelligence artificielle comme infrastructure, enjeu d’investissement et pression de gouvernance.",
     },
   },
   cybersecurity: {
@@ -34,8 +34,8 @@ export const categories: Record<
       fr: "Cybersécurité",
     },
     descriptions: {
-      en: "Cyber risk, resilience, digital exposure, and the economics of security under stress.",
-      fr: "Risque cyber, résilience, exposition numérique et économie de la sécurité sous contrainte.",
+      en: "Cyber risk, resilience, systemic exposure, and the economics of security under stress.",
+      fr: "Risque cyber, résilience, exposition systémique et économie de la sécurité sous contrainte.",
     },
   },
   crypto: {
@@ -45,8 +45,8 @@ export const categories: Record<
       fr: "Crypto",
     },
     descriptions: {
-      en: "Digital assets, enforcement limits, market structure, and the governance of programmable value.",
-      fr: "Crypto-actifs, limites de l’application des règles, structure de marché et gouvernance de la valeur programmable.",
+      en: "Digital assets, enforcement limits, market structure, and the governance under programmable value.",
+      fr: "Crypto-actifs, limites de l’application réglementaire, structure de marché et gouvernance de la valeur programmable.",
     },
   },
 };
