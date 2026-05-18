@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "*.mdx": "mdx"
+  },
+  "[mdx]": {
+    "editor.wordWrap": "on",
+    "editor.lineHeight": 24,
+    "editor.rulers": [80, 100],
+    "editor.minimap.enabled": false
+  }
+}
