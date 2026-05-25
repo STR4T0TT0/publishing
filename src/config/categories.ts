@@ -19,8 +19,8 @@ export const categories: Record<
   ai: {
     slug: "ai",
     labels: {
-      en: "AI",
-      fr: "IA",
+      en: "Artificial Intelligence",
+      fr: "Intelligence Artificielle",
     },
     descriptions: {
       en: "Strategic analysis of artificial intelligence as infrastructure, investment pressure, and governance constraint.",
@@ -41,8 +41,8 @@ export const categories: Record<
   crypto: {
     slug: "crypto",
     labels: {
-      en: "Crypto",
-      fr: "Crypto",
+      en: "Digital Assets",
+      fr: "Crypto-actifs",
     },
     descriptions: {
       en: "Digital assets, enforcement limits, market structure, and the governance under programmable value.",

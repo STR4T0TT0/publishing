@@ -13,10 +13,6 @@ const categoryData = categories[category];
 ---
 
 <section class="category-header">
-  <p class="eyebrow mono-label">
-    STR4T0TT0 / {categoryData.labels[lang]}
-  </p>
-
   <h1>{categoryData.labels[lang]}</h1>
 
   <p class="lead">{categoryData.descriptions[lang]}</p>
@@ -26,12 +22,6 @@ const categoryData = categories[category];
   .category-header {
     max-width: 860px;
     padding: 2rem 0 4rem;
-  }
-
-  .eyebrow {
-    color: var(--color-accent);
-    font-size: 0.8rem;
-    margin: 0 0 1rem;
   }
 
   h1 {
