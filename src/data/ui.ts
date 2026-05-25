@@ -37,7 +37,7 @@ export const ui: Record<
     nav: {
       home: "Home",
       ai: "AI",
-      cybersecurity: "Cybersecurity",
+      cybersecurity: "Cybersec",
       crypto: "Crypto",
       about: "About",
     },
@@ -68,7 +68,7 @@ export const ui: Record<
     nav: {
       home: "Accueil",
       ai: "IA",
-      cybersecurity: "Cybersécurité",
+      cybersecurity: "Cybersec",
       crypto: "Crypto",
       about: "À propos",
     },
